@@ -28,11 +28,22 @@ def newstringbychangingheader (originalstring, newheader):
 		words = originalstring.split('\n')
 
 		newstring = newheader
+		firstblockofcomments = True
+
 		for word in words:
-			firstblockofcomments = True
-			if ( word.startswith(C_SINGLE_LINE_COMMENT) == False and (firstblockofcomments == True)):
+			if (word.startswith(C_SINGLE_LINE_COMMENT) == True and (firstblockofcomments == True)):
+				# First few lines of single line comments;
+				# Original comments; no need to copy.
+				# Therefore, pass;
+				pass
+			else: 
+				# Copy all the rest of lines;
 				firstblockofcomments = False
 				newstring = newstring + word + "\n" 
+
+			# First line that do not start with //
+			if (word.startswith(C_SINGLE_LINE_COMMENT) == False):
+				firstblockofcomments = False
 				
 	elif (loc2 == 0):
 		endlocation = originalstring.find(C_MULTI_LINE_COMMENT_END)
